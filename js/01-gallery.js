@@ -44,6 +44,16 @@ const clickedItem = event.target.closest(".gallery__item");
     `);
 
     instance.show();
+
+    document.addEventListener('keydown', handleEscapeKey);
+    
+function handleEscapeKey(e) {
+    if (e.key === 'Escape') {
+        instance.close();
+        document.removeEventListener('keydown', handleEscapeKey);
+        }
+    }
+
 }
 
 
