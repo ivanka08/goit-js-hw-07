@@ -3,10 +3,10 @@ import { galleryItems } from './gallery-items.js';
 
 const list = document.querySelector(".gallery");
 
-list.insertAdjacentHTML("beforeend", createMurkup(galleryItems));
+list.insertAdjacentHTML("beforeend", createMarkup(galleryItems));
 list.addEventListener("click", handleClick)
 
-function createMurkup(arr) {
+function createMarkup(arr) {
     return arr.map(({ preview, original, description }) => `
     <li class="gallery__item">
   <a class="gallery__link" href="${original}">
@@ -41,20 +41,27 @@ const clickedItem = event.target.closest(".gallery__item");
     />
   </a>
     </div>
-    `);
-
-    instance.show();
-
-    document.addEventListener('keydown', handleEscapeKey);
+    `,  {
+      closable: false,
+      
+    onShow: (instance) => {
+      document.addEventListener("keydown", handleEscapeKey);
+      },
     
-function handleEscapeKey(e) {
-    if (e.key === 'Escape') {
-        instance.close();
-        document.removeEventListener('keydown', handleEscapeKey);
-        }
+    onClose: (instance) => {
+      document.removeEventListener("keydown", handleEscapeKey);
+    },
+  });
+  
+  instance.show();
+
+  function handleEscapeKey(e) {
+    if (e.key === "Escape") {
+      instance.close();
     }
-
+    }
+  
 }
-
+  
 
 console.log(galleryItems);
